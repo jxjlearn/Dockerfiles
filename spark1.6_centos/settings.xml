@@ -1,0 +1,10 @@
+<proxies>
+	<proxy>
+		<id>HomeProxy</id>
+		<active>true</active>
+		<protocol>http</protocol>
+		<host>192.168.1.10</host>
+		<port>3128</port>
+		<nonProxyHosts>localhost</nonProxyHosts>
+	</proxy>
+</proxies>

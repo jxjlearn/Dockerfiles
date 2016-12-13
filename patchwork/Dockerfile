@@ -37,7 +37,7 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends --allow-downgrades \
     python-dev python-pip python-setuptools python-wheel \
     python3.5-dev python3-pip python3-setuptools python3-wheel \
-    python3.4-dev findutils=4.4.2-7 sudo vim getmail\
+    python3.4-dev findutils=4.4.2-7 sudo vim getmail4\
     libmysqlclient-dev mysql-client curl unzip xvfb chromium-chromedriver \
     chromium-browser build-essential && \
     ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/
@@ -51,7 +51,8 @@ RUN useradd --uid=$UID --create-home patchwork
 # entrypoint.sh will prompt you to do this.
 # we install both Python 2 and Python 3 versions so you can use either
 COPY requirements-*.txt /tmp/
-RUN https_proxy=10.239.4.160:913 http_proxy=10.239.4.160:913
+# Add proxy if necessary
+# RUN https_proxy=xxxxxxx
 RUN pip3 install virtualenv tox && \
     pip3 install -r /tmp/requirements-dev.txt
 RUN pip2 install virtualenv tox && \
@@ -76,7 +77,7 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 # The incoming email has to be a email sent from a mail-list only containing git patch
 # Include your own getmailrc configuration file
 COPY tools/docker/getmailrc /tmp/getmailrc
-RUN cat /tmp/getmailrc /home/patchwork/.getmail/testit/getmailrc
+RUN makedir /home/patchwork/.getmail && cat /tmp/getmailrc >> /home/patchwork/.getmail/testit/getmailrc
 
 
 # We give sudo access to account patchwork

@@ -1,0 +1,22 @@
+[retriever]
+type = SimpleIMAPSSLRetriever
+#imap.gmail.com
+server = 10.1.192.48
+port = 993
+username = xxxxxxxx
+password = xxxxxxx
+#mailboxes = INBOX
+
+[destination]
+# we configure Patchwork as a "mail delivery agent", in that it will
+# handle our mails
+type = MDA_external
+path = /home/patchwork/patchwork/patchwork/bin/parsemail.sh
+
+[options]
+# retrieve only new emails
+read_all = False
+# do not add a Delivered-To: header field
+delivered_to = False
+# do not add a Received: header field
+received = False
